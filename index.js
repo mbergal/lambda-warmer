@@ -76,7 +76,7 @@ module.exports = (event, cfg = {}) => {
     };
 
     // Log it
-    config.log && config.log(log); // eslint-disable-line no-console
+    config.log && config.log(log);
 
     // flag as warm
     warm = true;
@@ -119,6 +119,18 @@ module.exports = (event, cfg = {}) => {
 
     return Promise.resolve(true);
   } else {
+    let log = {
+      action: "invocation",
+      function: funcName + ":" + funcVersion,
+      id,
+      warm,
+      lastAccessed: lastAccess,
+      lastAccessedSeconds:
+        lastAccess === null
+          ? null
+          : ((Date.now() - lastAccess) / 1000).toFixed(1),
+    };
+    config.log && config.log(log);
     warm = true;
     lastAccess = Date.now();
     return Promise.resolve(false);
