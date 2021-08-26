@@ -2,7 +2,7 @@ interface WarmerConfig {
   flag?: string;
   concurrency?: string;
   test?: string;
-  log?: boolean;
+  log?: boolean | ((obj: object) => void);
   correlationId?: string;
   delay?: number;
 }
